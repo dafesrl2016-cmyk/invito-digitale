@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect x="10" y="10" width="580" height="380" rx="12" ry="12" fill="#e8dcc9" stroke="#c2b59b" stroke-width="6"></rect>
+
+  <!-- piega centrale -->
+  <line x1="300" y1="20" x2="300" y2="380" stroke="#c2b59b" stroke-width="4"></line>
+
+  <!-- ombreggiatura -->
+  <rect x="10" y="10" width="290" height="380" fill="rgba(0,0,0,0.03)"></rect>
+  <rect x="300" y="10" width="290" height="380" fill="rgba(255,255,255,0.05)"></rect>
+</svg>

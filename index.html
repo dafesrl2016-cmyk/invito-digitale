@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Invito Digitale</title>
+
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    background: #f4efe8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Georgia", serif;
+  }
+
+  /* CONTENITORE BUSTA */
+  #container {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    background: url('busta_completa.png') no-repeat center/contain;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-radius: 12px;
+  }
+
+  /* SIGILLO */
+  #seal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: 2;
+  }
+
+  /* LETTERA */
+  #invitation {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 600px;
+    max-width: 90vw;
+    min-height: 400px;
+
+    background: #fffdf8;
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-sizing: border-box;
+    text-align: center;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    border: 1px solid #e6dfd5;
+
+    opacity: 0;
+  }
+
+  #invitation h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  #invitation p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+
+  /* BOTTONE RSVP */
+  #rsvp {
+    margin-top: 30px;
+    padding: 14px 28px;
+    font-size: 16px;
+    border: none;
+    background: #7b2d26;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  #rsvp:hover {
+    background: #5e201b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  }
+
+  /* ANIMAZIONE LETTERA */
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -45%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  /* MOBILE */
+  @media (max-width: 480px) {
+    #container {
+      width: 90vw;
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+
+    #seal {
+      width: 70px;
+    }
+
+    #invitation h1 {
+      font-size: 22px;
+    }
+
+    #invitation p {
+      font-size: 16px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div id="container">
+  <img id="seal" src="sigillo.png" alt="Sigillo di cera" />
+
+  <div id="invitation">
+    <h1>Gentile cliente,</h1>
+
+    <p>
+      Siamo lieti di invitarla a un incontro formativo esclusivo,
+      pensato appositamente per accogliervi e accompagnarvi
+      nella scoperta dei nostri servizi.
+    </p>
+
+    <p>
+      Un’occasione speciale per conoscerci meglio e approfondire
+      le soluzioni più innovative del settore.
+    </p>
+
+    <p>
+  <strong>
+    Dettagli dell'incontro:<br>
+    Data: 18 Aprile 2026<br>
+    Luogo:
+    <a href="https://maps.app.goo.gl/STnuA5JqRwzdHopS8"
+       target="_blank"
+       style="color:#7b2d26; text-decoration:none;">
+       Via Giuseppe Mazzini, 62, 33092 Meduno PN
+    </a>
+  </strong>
+</p>
+
+<p>
+Durante l'incontro, avrete modo di interagire
+ con i nostri esperti e con altri partecipanti,
+ favorendo uno scambio di idee.<br>
+Vi preghiamo di confermare la vostra
+partecipazione per consentirci di organizzare al 
+meglio l'evento.<br>
+Siamo entusiasti di darvi il benvenuto e di
+iniziare insieme questo percorso di crescita 
+e collaborazione.<br>
+Cordiali saluti,
+<br>
+</p>
+
+<p style="font-style: italic;">
+  Studio Dafe STP srl
+</p>
+
+
+    <a href="https://forms.gle/e7xNNzs1G3iRbF4b7" target="_blank">
+      <button id="rsvp">Conferma presenza</button>
+    </a>
+  </div>
+</div>
+
+<script>
+  const seal = document.getElementById("seal");
+  const invitation = document.getElementById("invitation");
+  const container = document.getElementById("container");
+
+  seal.addEventListener("click", () => {
+    // Effetto sigillo che si rompe
+    seal.style.transform = "translate(-50%, -50%) scale(1.4)";
+    seal.style.opacity = "0";
+
+    // Mostra lettera con animazione
+    setTimeout(() => {
+      container.style.background = "none";
+      invitation.style.display = "block";
+      invitation.style.animation = "fadeSlideIn 0.9s ease forwards";
+    }, 400);
+  });
+</script>
+
+</body>
+</html>

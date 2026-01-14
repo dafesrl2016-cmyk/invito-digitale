@@ -150,6 +150,30 @@ html, body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+/* ===== MOBILE FIX BOX ===== */
+@media (max-width: 480px) {
+
+  body {
+    overflow: auto;
+  }
+
+  #invitation {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+
+    margin: 40px auto;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+
+    padding-bottom: 60px; /* spazio per il bottone */
+  }
+
+  #overlay {
+    position: fixed;
+  }
+}
 
 /* MOBILE */
 @media (max-width: 480px) {
@@ -225,4 +249,5 @@ seal.addEventListener("click", () => {
 
 </body>
 </html>
+
 

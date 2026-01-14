@@ -1,208 +1,227 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Invito Digitale</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Allura&display=swap" rel="stylesheet">
+
 <style>
-  body, html {
-    height: 100%;
-    margin: 0;
-    background: #f4efe8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Georgia", serif;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #f4efe8;
+  overflow: hidden;
+  font-family: "Playfair Display", serif;
+}
 
-  /* CONTENITORE BUSTA */
-  #container {
-    position: relative;
-    width: 400px;
-    height: 300px;
-    background: url('busta_completa.png') no-repeat center/contain;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    border-radius: 12px;
-  }
+/* =========================
+   SCHERMATA INIZIALE
+========================= */
+#intro {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
 
-  /* SIGILLO */
+/* ANTE FULLSCREEN */
+.door {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1.2s ease; /* dissolvenza dolce */
+}
+
+#door-left {
+  background-image: url("anta1.png");
+}
+
+#door-right {
+  background-image: url("anta2.png");
+}
+
+/* NASCONDI ANTE */
+.fade-out {
+  opacity: 0;
+}
+
+/* SIGILLO */
+#seal {
+  width: 300px;
+  cursor: pointer;
+  z-index: 20;
+  animation: pulse 2s infinite;
+  transition: filter 0.4s ease; /* per hover glow */
+}
+
+/* PULSAZIONE */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(123,45,38,0.5));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px rgba(123,45,38,0.4));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(123,45,38,0.5));
+  }
+}
+
+/* HOVER GLOW */
+#seal:hover {
+  filter: drop-shadow(0 0 28px rgba(123,45,38,0.7));
+}
+
+/* =========================
+   SFONDO INVITO
+========================= */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: url("sfondo_box.png") center/cover no-repeat;
+  opacity: 0.6;
+  display: none;
+  z-index: 5;
+}
+
+/* =========================
+   BOX INVITO
+========================= */
+#invitation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 620px;
+
+  background: url("foglio_datato.png") center/cover no-repeat;
+  padding: 55px 45px;
+  text-align: center;
+
+  box-shadow: 0 35px 70px rgba(0,0,0,0.35);
+  border-radius: 18px; /* angoli arrotondati */
+
+  display: none;
+  z-index: 15;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+/* TESTI */
+#invitation h1 {
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+
+#invitation p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 14px 0;
+}
+
+/* FIRMA */
+.signature {
+  font-family: "Allura", cursive;
+  font-size: 34px;
+  margin-top: 30px;
+}
+
+/* BOTTONE */
+#rsvp {
+  margin-top: 30px;
+  padding: 14px 30px;
+  border: none;
+  background: #7b2d26;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* FADE */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
   #seal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 150px;
-    cursor: pointer;
-    transform: translate(-50%, -50%);
-    transition: transform 0.4s ease, opacity 0.4s ease;
-    z-index: 2;
+    width: 90px;
   }
-
-  /* LETTERA */
   #invitation {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 600px;
-    max-width: 90vw;
-    min-height: 400px;
-
-    background: #fffdf8;
-    border-radius: 16px;
-    padding: 40px 30px;
-    box-sizing: border-box;
-    text-align: center;
-
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    border: 1px solid #e6dfd5;
-
-    opacity: 0;
+    padding: 40px 25px;
   }
-
-  #invitation h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-
-  #invitation p {
-    font-size: 18px;
-    line-height: 1.5;
-    margin: 10px 0;
-  }
-
-  /* BOTTONE RSVP */
-  #rsvp {
-    margin-top: 30px;
-    padding: 14px 28px;
-    font-size: 16px;
-    border: none;
-    background: #7b2d26;
-    color: white;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  }
-
-  #rsvp:hover {
-    background: #5e201b;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-  }
-
-  /* ANIMAZIONE LETTERA */
-  @keyframes fadeSlideIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -45%);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  /* MOBILE */
-  @media (max-width: 480px) {
-    #container {
-      width: 90vw;
-      height: auto;
-      aspect-ratio: 4 / 3;
-    }
-
-    #seal {
-      width: 70px;
-    }
-
-    #invitation h1 {
-      font-size: 22px;
-    }
-
-    #invitation p {
-      font-size: 16px;
-    }
-  }
+}
 </style>
 </head>
 
 <body>
 
-<div id="container">
-  <img id="seal" src="sigillo.png" alt="Sigillo di cera" />
+<!-- INTRO -->
+<div id="intro">
+  <div id="door-left" class="door"></div>
+  <div id="door-right" class="door"></div>
+  <img id="seal" src="sigillo.png" alt="Sigillo in cera">
+</div>
 
-  <div id="invitation">
-    <h1>Gentile cliente,</h1>
+<!-- OVERLAY -->
+<div id="overlay"></div>
 
-    <p>
-      Siamo lieti di invitarla a un incontro formativo esclusivo,
-      pensato appositamente per accogliervi e accompagnarvi
-      nella scoperta dei nostri servizi.
-    </p>
+<!-- INVITO -->
+<div id="invitation">
+  <h1>Gentile cliente,</h1>
 
-    <p>
-      Un’occasione speciale per conoscerci meglio e approfondire
-      le soluzioni più innovative del settore.
-    </p>
+  <p>
+    Siamo lieti di invitarla a un incontro formativo esclusivo,
+    pensato per accogliervi e accompagnarvi
+    nella scoperta dei nostri servizi.
+  </p>
 
-    <p>
-  <strong>
-    Dettagli dell'incontro:<br>
-    Data: 18 Aprile 2026<br>
-    Luogo:
+  <p><strong>
+	Dettagli dell'incontro:<br>
+	Data: 18 Aprile 2026<br> 
+	Luogo:
     <a href="https://maps.app.goo.gl/STnuA5JqRwzdHopS8"
        target="_blank"
-       style="color:#7b2d26; text-decoration:none;">
-       Via Giuseppe Mazzini, 62, 33092 Meduno PN
+       style="color:#7b2d26;text-decoration:none;">
+      Via Giuseppe Mazzini, 62 – Meduno
     </a>
-  </strong>
-</p>
+  </strong></p>
 
-<p>
-Durante l'incontro, avrete modo di interagire
- con i nostri esperti e con altri partecipanti,
- favorendo uno scambio di idee.<br>
-Vi preghiamo di confermare la vostra
-partecipazione per consentirci di organizzare al 
-meglio l'evento.<br>
-Siamo entusiasti di darvi il benvenuto e di
-iniziare insieme questo percorso di crescita 
-e collaborazione.<br>
-Cordiali saluti,
-<br>
-</p>
+  <p>Durante l'incontro, avrete modo di interagire con i nostri esperti e con altri partecipanti, favorendo uno scambio di idee.<br> Vi preghiamo di confermare la vostra partecipazione per consentirci di organizzare al meglio l'evento.<br> Siamo entusiasti di darvi il benvenuto e di iniziare insieme questo percorso di crescita e collaborazione.<br> Cordiali saluti, <br></p>
 
-<p style="font-style: italic;">
-  Studio Dafe STP srl
-</p>
+  <div class="signature">Studio Dafe STP srl</div>
 
-
-    <a href="https://forms.gle/e7xNNzs1G3iRbF4b7" target="_blank">
-      <button id="rsvp">Conferma presenza</button>
-    </a>
-  </div>
+  <a href="https://forms.gle/e7xNNzs1G3iRbF4b7" target="_blank">
+    <button id="rsvp">Conferma presenza</button>
+  </a>
 </div>
 
 <script>
-  const seal = document.getElementById("seal");
-  const invitation = document.getElementById("invitation");
-  const container = document.getElementById("container");
+const seal = document.getElementById("seal");
+const intro = document.getElementById("intro");
+const overlay = document.getElementById("overlay");
+const invitation = document.getElementById("invitation");
+const doors = document.querySelectorAll(".door");
 
-  seal.addEventListener("click", () => {
-    // Effetto sigillo che si rompe
-    seal.style.transform = "translate(-50%, -50%) scale(1.4)";
-    seal.style.opacity = "0";
+seal.addEventListener("click", () => {
+  doors.forEach(door => door.classList.add("fade-out"));
 
-    // Mostra lettera con animazione
-    setTimeout(() => {
-      container.style.background = "none";
-      invitation.style.display = "block";
-      invitation.style.animation = "fadeSlideIn 0.9s ease forwards";
-    }, 400);
-  });
+  setTimeout(() => {
+    intro.style.display = "none";
+    overlay.style.display = "block";
+    invitation.style.display = "block";
+  }, 1200);
+});
 </script>
+
 </body>
 </html>
-
-
